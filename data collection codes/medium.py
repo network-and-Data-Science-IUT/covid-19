@@ -25,7 +25,7 @@ class mediumClass:
     def generate_allSocialDistancingData(self):
         statesData = self.csvHandler._loadData('states.csv')[0]
         for state in statesData:
-            fips = int(state['state-fips'], 10)
+            fips = int(state['state_fips'], 10)
             self.downloadHandler.get_socialDistancingData(fips, 'temp.json')
             # First step, create socialDistancing.csv file
             if state == statesData[0]:
