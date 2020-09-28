@@ -23,36 +23,12 @@ def get_csv(web_addres,file_address):
     csv_file.close
 
 if __name__ == "__main__":
-    # downloadHandler.get_socialDistancingData(2, 'sd-state%02d.json' % (2))
-    # downloadHandler.get_confirmAndDeathData( + 'confirmAndDeath.json')
-    # csvHandler.simplify_csvFile('csvFiles/latitude.csv', 'csvFiles/simple-lat.csv', ['county_fips', 'lat'])
-    # csvHandler.simplify_csvFile('csvFiles/hospital-beds.csv', 'csvFiles/simple-hospital-beds.csv', ['county_fips', 'beds(per1000)', 'unoccupiedBeds(per1000)'])
-    # csvHandler.merge_csvFiles_addRows('csvFiles/socialDistancing-s01.csv', 'csvFiles/socialDistancing-s11.csv', 'csvFiles/socialDistancing.csv')
-    # jsonHandler.transform_jsonToCsv_confirmAndDeathData( + 'confirmAndDeath.json',  + 'confirmAndDeath.csv')
-    # jsonHandler.transform_jsonToCsv_hospitalBedData( + 'hospital-beds.json',  + 'hospital-beds.csv')
-    # jsonHandler.transform_jsonToCsv_socialDistancingData( + 'sd-state01.json',  + 'socialDistancing-s01.csv')
-    # jsonHandler.transform_jsonToCsv_socialDistancingData('sd-state02.json',  + 'socialDistancing-s02.csv')
+    
     
     # get Social Distancing data
     
-    medium = mediumClass()
-    medium.generate_allSocialDistancingData('temp.csv')
-
-    # jsonHandler.transform_jsonToCsv_confirmAndDeathData('confirmAndDeath.json', 'temp-confirmAndDeath.csv')
-    # downloadHandler.get_allStations('stations.csv')
-    # downloadHandler.get_countyWeatherData('USW00093228', '2020-04-19', '2020-04-28', 'test.csv') #https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00093228/detail
-
-
-    #       |--Use these two lines to get all stations--|
-    # mediumObject = medium.mediumClass()
-    # mediumObject.downloadHandler.get_allStations('stations.csv')
-    #       |--|
-
-
-    #       |--Use this line to test merging two temporalDataFile: 'confirmAndDeath.csv' and 'socialDistancing.csv'--|
-    # mediumObject = medium.mediumClass()
-    # mediumObject.csvHandler.merge_csvFiles_addColumns('confirmAndDeath.csv', 'socialDistancing.csv', 'temporal-data.csv', ['countyFIPS', 'date'], ['countyFips', 'date'], ['totalGrade', 'visitationGrade', 'encountersGrade', 'travelDistanceGrade'])
-    #       |--|
+    mediumObject = medium.mediumClass()
+    mediumObject.generate_allSocialDistancingData()
     
     
     weather=pd.read_csv('./csvFiles/weather.csv')
@@ -68,8 +44,6 @@ if __name__ == "__main__":
     mediumObject.downloadHandler.get_countyWeatherData('1001', 'USW00093228', startdate, enddate, 'test.csv')
     mediumObject.generate_allWeatherData(startdate, enddate)
 
-    # mediumObject = medium.mediumClass()
-    # mediumObject.downloadHandler.get_airlines()
     
     # get confirmed cases data
     get_csv('https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv',\
@@ -142,14 +116,7 @@ if __name__ == "__main__":
     data['fips']=data['county_fips']//1000
     data=pd.merge(data,dailytest,how='left',left_on=['date','fips'],right_on=['date','fips'])
 
-    state_pop=fix[['state_fips','total_population']].groupby(['state_fips']).sum()
-    state_pop=state_pop.reset_index()
-
-    data=pd.merge(data,state_pop,how='left',left_on=['fips'],right_on=['state_fips'])
-
-    data['totalTestResultsIncrease']=data['totalTestResultsIncrease']/data['total_population']
-
-    data.drop(['fips','state_fips','total_population'],axis=1,inplace=True)
+    data.drop(['fips'],axis=1,inplace=True)
     data.rename(columns={'totalTestResultsIncrease':'daily-state-test'},inplace=True)
 
     ############################################################## add weather data
@@ -300,7 +267,7 @@ if __name__ == "__main__":
     data=data[data['date']<=max_date]
     unimputed_data=unimputed_data[unimputed_data['date']<=max_date]
 
-    #data['date']=data['date'].apply(lambda x: x.strftime('%m/%d/%y'))
+    # data['date']=data['date'].apply(lambda x: x.strftime('%m/%d/%y'))
     unimputed_data['date']=unimputed_data['date'].apply(lambda x: x.strftime('%m/%d/%y'))
     unimputed_data.to_csv('csvFiles/unimputed-temporal-data.csv',index=False)
     
@@ -309,7 +276,7 @@ if __name__ == "__main__":
 
     ########################################################################## imputation
 
-    #data['date']=data['date'].apply(lambda x:datetime.datetime.strptime(x,'%m/%d/%y'))
+    # data['date']=data['date'].apply(lambda x:datetime.datetime.strptime(x,'%m/%d/%y'))
 
     covariate_to_imputed = ['social-distancing-total-grade','social-distancing-visitation-grade',
                             'social-distancing-encounters-grade','social-distancing-travel-distance-grade',
@@ -320,6 +287,17 @@ if __name__ == "__main__":
     counties_with_all_null_ind={}
     for i in covariate_to_imputed:
         counties_with_all_null_ind[i]=temp[temp[i]==0].index.tolist()
+        
+    
+    
+    # prepare social distancing features for imputation
+    
+    data['social-distancing-total-grade']=data['social-distancing-total-grade'].replace(['A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F']\
+                                                                                        ,[12,11,10,9,8,7,6,5,4,3,2,1])
+
+    for i in ['social-distancing-visitation-grade','social-distancing-encounters-grade',\
+              'social-distancing-travel-distance-grade']:
+        data[i]=data[i].replace(['A','B','C','D','F'],[5,4,3,2,1])
 
 
     # impute first days social distancing with lowest value    
@@ -330,6 +308,7 @@ if __name__ == "__main__":
         data.loc[(data['date']<datetime.datetime(2020,2,24)),social_distancing_grade]=1 # we have no social distancing data before 2020,2,24
 
     data['date']=data['date'].apply(lambda x: x.strftime('%m/%d/%y'))
+    
 
 
     # impute covariates with KNN imputer
@@ -354,6 +333,14 @@ if __name__ == "__main__":
 
         # delete values for all null counties
         data.loc[data['county_fips'].isin(counties_with_all_null_ind[covar]),covar]=np.NaN
+        
+    # transform social distancing features to nominal grades
+    data['social-distancing-total-grade']=data['social-distancing-total-grade'].replace([12,11,10,9,8,7,6,5,4,3,2,1]\
+                                                                                        ,['A','A-','B+','B','B-','C+','C','C-','D+','D','D-','F'])
+
+    for i in ['social-distancing-visitation-grade','social-distancing-encounters-grade',\
+              'social-distancing-travel-distance-grade']:
+        data[i]=data[i].replace([5,4,3,2,1],['A','B','C','D','F'])
 
     # remove social-distancing-visitation-grade from imputed data cause it has high volume of nulls
     data=data.drop(['social-distancing-visitation-grade'],axis=1)
@@ -389,7 +376,7 @@ if __name__ == "__main__":
 
     for i in fixed_features_with_nulls:
         nullind=fix.loc[pd.isnull(fix[i]),'county_fips'].unique()
-        print(len(nullind))
+        
         data=data[~data['county_fips'].isin(nullind)]
         fix=fix[~fix['county_fips'].isin(nullind)]
 
@@ -398,7 +385,7 @@ if __name__ == "__main__":
 
     for i in timeDeapandant_features_with_nulls:
         nullind=data.loc[pd.isnull(data[i]),'county_fips'].unique()
-        print(len(nullind))
+        
         data=data[~data['county_fips'].isin(nullind)]
         fix=fix[~fix['county_fips'].isin(nullind)]
 
