@@ -5,7 +5,7 @@
 		county_fips:
 				County FIPS code
         
-    state_fips
+    		state_fips:
 				State FIPS code
         
 		county_name:
