@@ -1,36 +1,51 @@
-fixed-data.csv:
-
+	Data fields description:
+	
 		state_fips
-
-		county_fips
-
-		county_name
+				State FIPS code
+		county_fips:
+				County FIPS code
+		county_name:
+				Name of county
+		state_name:
+				Name of state
 		total_population:
 				Total population of each county
+				
+		percent_population_in_state:
+				Percentage of the county population in the state
 		female-percent:
 				percent of female residents in each county
 				source: https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/counties/asrh/cc-est2018-alldata.csv
+		age distribution:
+				percent of residents in different age groups
+				Consisted of:
+					'age_0_4', 'age_5_9', 'age_10_14', 'age_15_19',
+      					'age_20_24', 'age_25_29', 'age_30_34', 'age_35_39', 'age_40_44',
+       					'age_45_49', 'age_50_54', 'age_55_59', 'age_60_64', 'age_65_69',
+       					'age_70_74', 'age_75_79', 'age_80_84', 'age_85_or_higher'
+				Sorrce: https://www.census.gov/programs-surveys/popest.html
 		area:
-				This is land area in Miles^2
-				source: https://www2.census.gov/library/publications/2011/compendia/usa-counties/excel/LND01.xls (Data from census)
+				The land area in Miles^2
+				Source: https://www2.census.gov/library/publications/2011/compendia/usa-counties/excel/LND01.xls (Data from census)
+				
 		population_density:
 				Calculated as "population" / "area"
 		latitude:
-				This is latitude of a random city in each county. The city latitudes extracted from uscities.csv
-		hospital_beds:
+				Latitude of the county center
+		longitude:
+				Longitude of the county center
+		hospital_beds_ratio:
 				number of hospital beds per person
 				Calculated as "beds(per1000)" / 1000
 				"beds(per1000)" is extracted from hospital-beds.csv
 				source: https://www.urban.org/policy-centers/health-policy-center/projects/understanding-hospital-bed-capacities-nationwide-amid-covid-19
-		icu_bed:
+		icu_beds_ratio:
 				number of icu beds per person
 				sourse: https://public.tableau.com/profile/todd.bellemare#!/vizhome/DefinitiveHCCOVID-19CapacityPredictor/DefinitiveHealthcareCOVID-19CapacityPredictor		
-		ventilator_capacity:
+		ventilator_capacity_ratio:
 				number of ventilator per person
 				sourse: https://public.tableau.com/profile/todd.bellemare#!/vizhome/DefinitiveHCCOVID-19CapacityPredictor/DefinitiveHealthcareCOVID-19CapacityPredictor
-		poverty_estimate:
-				Percent of persons in poverty
-				source: https://www.census.gov/programs-surveys/saipe.html
+
 		median_household_income:
 				Median household income in the Past 12 Months
 				source: https://www.census.gov/programs-surveys/saipe.html
@@ -38,82 +53,87 @@ fixed-data.csv:
 				gross domestic product per capita for each county (economic measure)
 				source: https://ssti.org/blog/useful-stats-10-year-changes-real-gdp-county-and-industry-2009-2018
 					https://www.bea.gov/data/gdp/gdp-county-metro-and-other-areas
-		number_of_houses:
-				source: https://www2.census.gov/programs-surveys/popest/tables/2010-2018/housing/totals/PEP_2018_PEPANNHU_counties.zip
+
 		houses_density:
 				Calculated as "number of houses" / "land area"
+				source: https://www2.census.gov/programs-surveys/popest/tables/2010-2018/housing/totals/PEP_2018_PEPANNHU_counties.zip
 		education_level:
+				represent the percentage of residents with different levels of education
+				consisted of :
+					'less_than_high_school_diploma'
+					'high_school_diploma_only'
+       					'some_college_or_higher'
 				source: https://www.ers.usda.gov/webdocs/DataFiles/48747/Education.xls?v=568.3
+				
 		total_college_population:
 				Total number of students and staff of universities and colleges devided by total population in each county
 				source: https://nces.ed.gov/ipeds/use-the-data
-		diabetes:
+				
+		immigrant_student_ratio:
+				Total number of students who study in this county but are residents of the other states, divided by the total county population
+				Source: https://nces.ed.gov/ipeds/use-the-data
+			
+		percent_diabetes:
 				Percent of Adults with Diabetes in each county
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
-		smokers:
+		percent_smokers:
 				Percent of smokers in each county
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
-		religious:
+		Religious_congregation_ratio:
 				Percent of religion congregation members in each county
 				Source: http://www.thearda.com/Archive/Files/Downloads/RCMSCY10_DL.asp
-		party:
-				Party for each state (set to 0 for republican & 1 for democratic)
+		political_party:
+				Political party for each state (set to 0 for republican & 1 for democratic)
 				Source: https://en.wikipedia.org/wiki/List_of_United_States_governors
-		total_county_test:
-				total number of test performed in each county
-				Source: https://github.com/kristydahl/covid-19/blob/master/covid_tests_data_UCS.csv
+
 		airport_distance:
 				distance to nearest international airport with average daily passenger load more than 10
 				Source: https://catalog.data.gov/dataset/airports & https://openflights.org/data.html
-		passenger_load:
-				average daily passenger load of nearest international airport
+				
+		passenger_load_ratio:
+				average daily passenger load of nearest international airport to the county
 				Source: https://data.transportation.gov/Aviation/International_Report_Passengers/xgub-n9bw
+				
 		deaths_per_100000:
 				county 2018 deaths per 100000
 				Source: https://wonder.cdc.gov/mcd-icd10.html
+				
+	
 		meat_plants:
+				Number of meat and poultry processing plants in each county
 				Source: https://origin-www.fsis.usda.gov/wps/wcm/connect/3e414e13-d601-427c-904a-319e2e84e487/MPI_Directory_by_Establishment_Name.xls?MOD=AJPERES
-		
-
-
-
-temporal-data.csv:
 
     		weather_data:
+				consisted of:
+					'Precipitation'
+					'Temperature'
+				
 				source: https://www.ncdc.noaa.gov/cdo-web/datatools/selectlocation
 				We find stations once from source page, then we used them and API to gather weather data
 				API page: https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation
+				
 		social-distancing-grades:
-				measure of social distancing observance in each county at day t
-				consist of:
-				'social-distancing-visitation-grade'
-				'social-distancing-encounters-grade'
-				'social-distancing-travel-distance-grade'
-								Values are (A,B,C,D,F) transformed to range from 1 to 5 where:
-									A=5,B=4,C=3,D=2,F=1
-				and 'social-distancing-total-grade'
-								Values are (A,A-,B+,B,B-,C+,C,C-,D+,D,D-,F) transformed to range from 1 to 12 where:
-									A=12,A-=11,B+=10,B=9,B-=8,C+=7,C=6,C-=5,D+=4,D=3,D-=2,F=1
+				measure of social distancing adherence in each county
+				consisted of:
+					'social-distancing-visitation-grade'
+					'social-distancing-encounters-grade'
+					'social-distancing-travel-distance-grade'
+								Values are (A,B,C,D,F)
+									
+					 and 'social-distancing-total-grade'
+								Values are (A,A-,B+,B,B-,C+,C,C-,D+,D,D-,F)
+								
 				Source: https://unacast-2019.webflow.io/covid19/social-distancing-scoreboard
+				
 		virus-pressure:
-				Calculated as Sum(0.5 * "confirmed") over neighboring counties at day t
-		severe_cases:
-				number of severe cases in each county at day t
-        			sourse: https://public.tableau.com/profile/todd.bellemare#!/vizhome/DefinitiveHCCOVID-19CapacityPredictor/DefinitiveHealthcareCOVID-19CapacityPredictor	
+				Calculated as Average(0.5 * "confirmed") over neighboring counties
 
-		airlines-data:
-				source: https://www.flightradar24.com/31.11,-95.18/4 , https://www.bts.dot.gov/browse-statistical-products-and-data/bts-publications/airline-service-quality-performance-234-time
-				api: https://data-live.flightradar24.com/zones/fcgi/feed.js?bounds=51.70,0.51,-139.20,-51.16&faa=1&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1
-
-		daily-country-test-per-1000:
-				number of test performed in country per 1000 people in each day
-				Source: https://covidtracking.com/api
 		daily-state-test:
-				Nummber of tests performed in each state at day t
+				Number of daily tests performed in each state
 				Source:https://covidtracking.com
-		confirmed:
+		covid_19_confirmed_cases:
 				number of confirmed covid-19 cases
 				Source: https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
-		death:
+		covid_19_deaths:
 				number of covid-19 deaths
 				Source: https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
