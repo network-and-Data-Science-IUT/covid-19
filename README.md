@@ -114,7 +114,7 @@
 				Number of meat and poultry processing plants in each county
 				Source: https://origin-www.fsis.usda.gov/wps/wcm/connect/3e414e13-d601-427c-904a-319e2e84e487/MPI_Directory_by_Establishment_Name.xls?MOD=AJPERES
 
-    		weather_data:
+    	weather_data:
 				consisted of:
 					'Precipitation'
 					'Temperature'
