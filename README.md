@@ -5,7 +5,7 @@
 		county_fips:
 				County FIPS code
         
-    		state_fips:
+    	state_fips:
 				State FIPS code
         
 		county_name:
@@ -86,6 +86,10 @@
 		percent_smokers:
 				Percent of smokers in each county
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
+		percent_insured:
+				Percentage of health insured residents
+				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
+				
 		Religious_congregation_ratio:
 				Percent of religion congregation members in each county
 				Source: http://www.thearda.com/Archive/Files/Downloads/RCMSCY10_DL.asp
@@ -131,9 +135,21 @@
 								Values are (A,A-,B+,B,B-,C+,C,C-,D+,D,D-,F)
 								
 				Source: https://unacast-2019.webflow.io/covid19/social-distancing-scoreboard
+		
+		mobility-trend-change:
+		
+				Percent change in mobility trends in different place categories compared to pre-COVID-19 period
+				consisted of:
+					'retail_and_recreation_mobility_percent_change'
+					'grocery_and_pharmacy_mobility_percent_change'
+					'parks_mobility_percent_change'
+					'transit_stations_mobility_percent_change'
+					'workplaces_mobility_percent_change,residential_mobility_percent_change'
+					
+				Source: https://www.google.com/covid19/mobility/
 				
 		virus-pressure:
-				Calculated as Average(0.5 * "confirmed") over neighboring counties
+				Calculated as Average("covid_19_confirmed_cases") over neighboring counties
 
 		daily-state-test:
 				Number of daily tests performed in each state
