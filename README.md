@@ -138,13 +138,15 @@
 		
 		mobility-trend-change:
 		
-				Percent change in mobility trends in different place categories compared to pre-COVID-19 period
-				consisted of:
+				Percent change in mobility trends in different place categories compared to pre-COVID-19 period.
+				These features are obtained from Google mobility reports and are consisted of:
+				
 					'retail_and_recreation_mobility_percent_change'
 					'grocery_and_pharmacy_mobility_percent_change'
 					'parks_mobility_percent_change'
 					'transit_stations_mobility_percent_change'
-					'workplaces_mobility_percent_change,residential_mobility_percent_change'
+					'workplaces_mobility_percent_change',
+					'residential_mobility_percent_change'
 					
 				Source: https://www.google.com/covid19/mobility/
 				
