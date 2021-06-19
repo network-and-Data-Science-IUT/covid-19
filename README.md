@@ -17,11 +17,11 @@
 		total_population:
 				Total population of each county
 				
-		percent_population_in_state:
-				Percentage of the county population in the state
+		population_ratio_in_state:
+				ratio of the population of a county to the population of its state
         
-		female-percent:
-				percent of female residents in each county
+		proportion_female:
+				proportion of female residents in each county
 				source: https://www2.census.gov/programs-surveys/popest/datasets/2010-2018/counties/asrh/cc-est2018-alldata.csv
 		age distribution:
 				percent of residents in different age groups
@@ -46,7 +46,7 @@
 				Calculated as "beds(per1000)" / 1000
 				"beds(per1000)" is extracted from hospital-beds.csv
 				source: https://www.urban.org/policy-centers/health-policy-center/projects/understanding-hospital-bed-capacities-nationwide-amid-covid-19
-		icu_beds_ratio:
+		intensive_care_unit_(ICU)_bed_ratio:
 				number of icu beds per person
 				sourse: https://public.tableau.com/profile/todd.bellemare#!/vizhome/DefinitiveHCCOVID-19CapacityPredictor/DefinitiveHealthcareCOVID-19CapacityPredictor		
 		ventilator_capacity_ratio:
@@ -61,7 +61,7 @@
 				source: https://ssti.org/blog/useful-stats-10-year-changes-real-gdp-county-and-industry-2009-2018
 					https://www.bea.gov/data/gdp/gdp-county-metro-and-other-areas
 
-		houses_density:
+		housing_density:
 				Calculated as "number of houses" / "land area"
 				source: https://www2.census.gov/programs-surveys/popest/tables/2010-2018/housing/totals/PEP_2018_PEPANNHU_counties.zip
 		education_level:
@@ -72,7 +72,7 @@
        					'some_college_or_higher'
 				source: https://www.ers.usda.gov/webdocs/DataFiles/48747/Education.xls?v=568.3
 				
-		total_college_population:
+		academic_population_ratio:
 				Total number of students and staff of universities and colleges devided by total population in each county
 				source: https://nces.ed.gov/ipeds/use-the-data
 				
@@ -80,14 +80,14 @@
 				Total number of students who study in this county but are residents of the other states, divided by the total county population
 				Source: https://nces.ed.gov/ipeds/use-the-data
 			
-		percent_diabetes:
+		percent_of_diabetes:
 				Percent of Adults with Diabetes in each county
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
-		percent_smokers:
+		percent_of_smokers:
 				Percent of smokers in each county
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
-		percent_insured:
-				Percentage of health insured residents
+		percent_of_insured_residents:
+				Percent of health insured residents
 				Source: https://www.countyhealthrankings.org/app/alabama/2020/downloads
 				
 		Religious_congregation_ratio:
@@ -105,16 +105,16 @@
 				average daily passenger load of nearest international airport to the county
 				Source: https://data.transportation.gov/Aviation/International_Report_Passengers/xgub-n9bw
 				
-		deaths_per_100000:
-				county 2018 deaths per 100000
+		death_ratio:
+				Number of deaths divided by the total population
 				Source: https://wonder.cdc.gov/mcd-icd10.html
 				
 	
-		meat_plants:
+		number_of_meat_plants:
 				Number of meat and poultry processing plants in each county
 				Source: https://origin-www.fsis.usda.gov/wps/wcm/connect/3e414e13-d601-427c-904a-319e2e84e487/MPI_Directory_by_Establishment_Name.xls?MOD=AJPERES
 
-    	weather_data:
+    		weather_data:
 				consisted of:
 					'Precipitation'
 					'Temperature'
@@ -123,20 +123,20 @@
 				We find stations once from source page, then we used them and API to gather weather data
 				API page: https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation
 				
-		social-distancing-grades:
+		social distancing grades:
 				measure of social distancing adherence in each county
 				consisted of:
-					'social-distancing-visitation-grade'
-					'social-distancing-encounters-grade'
-					'social-distancing-travel-distance-grade'
+					'social_distancing_visitation_grade'
+					'social_distancing_encounters_grade'
+					'social_distancing_travel_distance_grade'
 								Values are (A,B,C,D,F)
 									
-					 and 'social-distancing-total-grade'
+					 and 'social_distancing_total_grade'
 								Values are (A,A-,B+,B,B-,C+,C,C-,D+,D,D-,F)
 								
 				Source: https://unacast-2019.webflow.io/covid19/social-distancing-scoreboard
 		
-		mobility-trend-change:
+		mobility trend change:
 		
 				Percent change in mobility trends in different place categories compared to pre-COVID-19 period.
 				These features are obtained from Google mobility reports and are consisted of:
@@ -150,12 +150,37 @@
 					
 				Source: https://www.google.com/covid19/mobility/
 				
-		virus-pressure:
+		virus_pressure:
 				Calculated as Average("covid_19_confirmed_cases") over neighboring counties
 
-		daily-state-test:
+		daily_state_test:
 				Number of daily tests performed in each state
 				Source:https://covidtracking.com
+				
+		percent_of_vaccinated_residents:
+				Percent of residents who are fully vaccinated (have second dose of a two-dose vaccine or one dose of a single-dose vaccine)
+				Source: https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh
+		
+		weekly_reported_total_inpatient_beds:
+				Weekly average number of total number of staffed inpatient beds (including ICU beds) reported by the hospitals in the county
+				Source: https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u
+				
+		weekly_occupied_inpatient_beds:
+				Weekly average number of total number of staffed inpatient beds that are occupied, reported by the hospitals in the county
+				Source: https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u
+		
+		weekly_reported_total_ICU_beds:
+				Weekly average number of total number of staffed inpatient ICU beds reported by the hospitals in the county
+				Source: https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u
+				
+		weekly_occupied_ICU_beds:
+				Weekly average number of total number of staffed inpatient ICU beds that are occupied, reported by the hospitals in the county
+				Source: https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u
+				
+		Weekly_admission:
+				Weekly average number of adult or pediatric patients who were admitted to an inpatient bed in the county who had confirmed COVID-19 at the time of admission
+				Source: https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u
+				
 		covid_19_confirmed_cases:
 				number of confirmed covid-19 cases
 				Source: https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
